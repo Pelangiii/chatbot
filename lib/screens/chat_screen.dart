@@ -9,259 +9,241 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
+
   final List<Map<String, dynamic>> messages = [
     {
-      'text': 'Limited Knowledge',
+      'text':
+          "I can't believe this is happening! Everything is falling apart, and I feel so overwhelmed 😭",
+      'isUser': true,
+      'color': const Color(0xFF5A3E36),
+    },
+    {
+      'text':
+          "Shinomya, let's work on coping strategies. You're not alone. I'm here with you all the way 🤝😊",
       'isUser': false,
-      'color': const Color(0xFF8D6E63), // Brown for bot
+      'color': const Color(0xFFF2EFEA),
     },
   ];
 
   @override
   Widget build(BuildContext context) {
-    var colors = Colors;
-    var grey = Colors.grey;
     return Scaffold(
-      appBar: AppBar(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Doctor Freud AI'),
-          ],
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.orange,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Center(
-              child: Text(
-                '245 Chat Left',
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.8),
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Search functionality')),
-              );
-            },
-            icon: const Icon(Icons.search, color: Colors.white),
-          ),
-        ],
-      ),
+      backgroundColor: const Color(0xFFEDE7DE),
       body: SafeArea(
         child: Column(
           children: [
-            // Limited Knowledge note
+            // ================= HEADER ==================
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              color: Colors.orange.withOpacity(0.1),
-              child: const Row(
-                children: [
-                  Icon(Icons.info_outline, size: 20, color: Colors.orange),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Limited Knowledge',
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(16.0),
-                itemCount: messages.length + 1, // +1 for divider
-                itemBuilder: (context, index) {
-                  if (index == messages.length) {
-                    // Today divider
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 1,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Text(
-                              'Today',
-                              style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              height: 1,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                  final message = messages[index];
-                  return Align(
-                    alignment: message['isUser'] ? Alignment.centerRight : Alignment.centerLeft,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 4.0),
-                      padding: const EdgeInsets.all(12.0),
-                      decoration: BoxDecoration(
-                        color: message['color'] ?? (message['isUser'] ? Colors.orange : Colors.grey[200]),
-                        borderRadius: BorderRadius.only(
-                          topLeft: const Radius.circular(20),
-                          topRight: const Radius.circular(20),
-                          bottomLeft: message['isUser'] ? const Radius.circular(20) : Radius.zero,
-                          bottomRight: message['isUser'] ? Radius.zero : const Radius.circular(20),
-                        ),
-                      ),
-                      child: Text(
-                        message['text'],
-                        style: TextStyle(
-                          color: message['isUser'] ? Colors.white : Colors.black87,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            // Input field
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.fromLTRB(16, 14, 16, 20),
+              decoration: const BoxDecoration(
                 color: Colors.white,
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(40),
+                ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, -2),
-                  ),
+                    color: Colors.black12,
+                    blurRadius: 8,
+                    offset: Offset(0, 2),
+                  )
                 ],
               ),
               child: Row(
                 children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      decoration: InputDecoration(
-                        hintText: 'Type to start chatting',
-                        hintStyle: TextStyle(color: Colors.grey[500]),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          // borderSide: BorderSide(color: Colors.grey[300]),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          // borderSide: BorderSide(color: Colors.grey[300]),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.orange),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        filled: true,
-                        fillColor: Colors.grey[50],
+                  // Arrow Back
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        shape: BoxShape.circle,
                       ),
-                      onSubmitted: (text) {
-                        if (text.isNotEmpty) {
-                          setState(() {
-                            messages.add({
-                              'text': text,
-                              'isUser': true,
-                              'color': Colors.orange,
-                            });
-                            _controller.clear();
-                          });
-                          // Add bot response
-                          Future.delayed(const Duration(milliseconds: 500), () {
-                            if (mounted) {
-                              setState(() {
-                                messages.add({
-                                  'text': 'Bot response to: $text',
-                                  'isUser': false,
-                                  'color': const Color(0xFF8D6E63), // Brown for bot
-                                });
-                              });
-                            }
-                          });
-                        }
-                      },
+                      child: const Icon(Icons.arrow_back, color: Colors.black87),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 12),
+
+                  // Avatar Bulat
                   Container(
+                    width: 46,
+                    height: 46,
                     decoration: BoxDecoration(
-                      color: Colors.orange,
+                      color: Colors.brown.shade200,
                       shape: BoxShape.circle,
                     ),
-                    child: IconButton(
-                      onPressed: () {
-                        final text = _controller.text;
-                        if (text.isNotEmpty) {
-                          setState(() {
-                            messages.add({
-                              'text': text,
-                              'isUser': true,
-                              'color': Colors.orange,
-                            });
-                            _controller.clear();
-                          });
-                          // Add bot response
-                          Future.delayed(const Duration(milliseconds: 500), () {
-                            if (mounted) {
-                              setState(() {
-                                messages.add({
-                                  'text': 'Bot response to: $text',
-                                  'isUser': false,
-                                  'color': const Color(0xFF8D6E63),
-                                });
-                              });
-                            }
-                          });
-                        }
-                      },
-                      icon: const Icon(
+                    child: const Icon(
+                      Icons.person,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+
+                  // Nama + info
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Doctor Freud.AI",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          "251 Chats Left  •  GPT-6",
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+
+                  // Search Button
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.search),
+                  )
+                ],
+              ),
+            ),
+
+            // ================= CHAT LIST ==================
+            Expanded(
+              child: ListView.builder(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  final msg = messages[index];
+
+                  bool isUser = msg['isUser'];
+                  Color bubbleColor = msg['color'];
+
+                  return Column(
+                    crossAxisAlignment: isUser
+                        ? CrossAxisAlignment.end
+                        : CrossAxisAlignment.start,
+                    children: [
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                        margin: const EdgeInsets.symmetric(vertical: 6),
+                        padding: const EdgeInsets.all(14),
+                        constraints: BoxConstraints(
+                          maxWidth:
+                              MediaQuery.of(context).size.width * 0.78,
+                        ),
+                        decoration: BoxDecoration(
+                          color: bubbleColor,
+                          borderRadius: BorderRadius.only(
+                            topLeft: const Radius.circular(22),
+                            topRight: const Radius.circular(22),
+                            bottomLeft: isUser
+                                ? const Radius.circular(22)
+                                : const Radius.circular(0),
+                            bottomRight: isUser
+                                ? const Radius.circular(0)
+                                : const Radius.circular(22),
+                          ),
+                        ),
+                        child: Text(
+                          msg['text'],
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: isUser ? Colors.white : Colors.black87,
+                          ),
+                        ),
+                      ),
+
+                      if (!isUser)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 6),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.orange.shade300,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: const Text(
+                              "🧠 Emotion: Data Updated",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        )
+                    ],
+                  );
+                },
+              ),
+            ),
+
+            // ================= INPUT BAR ==================
+            Container(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(40),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10,
+                    offset: Offset(0, -3),
+                  )
+                ],
+              ),
+              child: Row(
+                children: [
+                  // Text Field
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: TextField(
+                        controller: _controller,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Type to start chatting...",
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+
+                  // Send Button
+                  GestureDetector(
+                    onTap: sendMessage,
+                    child: Container(
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: Colors.green.shade600,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
                         Icons.send,
                         color: Colors.white,
+                        size: 20,
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Attach photo functionality')),
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.camera_alt,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                  )
                 ],
               ),
             ),
@@ -269,5 +251,31 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       ),
     );
+  }
+
+  // ===================== SEND MESSAGE =====================
+  void sendMessage() {
+    String text = _controller.text.trim();
+    if (text.isEmpty) return;
+
+    setState(() {
+      messages.add({
+        'text': text,
+        'isUser': true,
+        'color': const Color(0xFF5A3E36),
+      });
+    });
+
+    _controller.clear();
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        messages.add({
+          'text': "I hear you... let's explore that together.",
+          'isUser': false,
+          'color': const Color(0xFFF2EFEA),
+        });
+      });
+    });
   }
 }
